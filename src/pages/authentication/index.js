@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 
 
@@ -7,18 +8,29 @@ const Authentication = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-   // const emailRef = useRef(null)
-   // console.log(emailRef)
-   // console.log(email)
-   useEffect(() => {
-       console.log('dsadsad')
-   }, [email])
+    const [isSubmitting, setSubmitting] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setSubmitting(true)
         console.log('data', email, password)
     }
+
+    useEffect(() => {
+        if(!isSubmitting) {
+            return
+        }
+        axios('https://conduit.productionready.io/api/users/login', {
+            method: 'post',
+            data: {
+                user: {
+                    email: 'dfgdfds@mail.ru',
+                    password: 'fgfdsfdsgdf'
+                }
+            }
+        })
+       // console.log('dsadsad')
+    })
 
     return(
         <div className="auth-page">
